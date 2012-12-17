@@ -1,5 +1,5 @@
 --
--- In decreasing order of (weight - length), use larger weight if tie.
+-- In decreasing order of (weight / length), doesn't matter how to break ties.
 --
 
 -- output: sum of weighted completion times
@@ -26,9 +26,8 @@ newtype WLprio = WLprio { getWLprio :: (Int, Int) } deriving (Eq)
 instance Ord WLprio where
     -- compare :: WLprio -> WLprio -> Ordering
     compare (WLprio (w1, l1)) (WLprio (w2, l2)) =
-        case compare (w1 - l1) (w2 - l2) of
-             EQ  -> compare w1 w2
-             c@_ -> c
+        compare ((fromIntegral w1) / (fromIntegral l1))
+                ((fromIntegral w2) / (fromIntegral l2))
 
 type WLval = (Int, Int)
 
