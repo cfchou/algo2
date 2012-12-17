@@ -21,7 +21,7 @@ main = getArgs >>= \(f:_) ->
             (_, sum) = complSum lst
         in  print sum
 
-newtype WLprio = WLprio { getWLprio :: (Int, Int) } deriving (Eq)
+newtype WLprio = WLprio { getWLprio :: (Integer, Integer) } deriving (Eq)
 
 instance Ord WLprio where
     -- compare :: WLprio -> WLprio -> Ordering
@@ -29,7 +29,7 @@ instance Ord WLprio where
         compare ((fromIntegral w1) / (fromIntegral l1))
                 ((fromIntegral w2) / (fromIntegral l2))
 
-type WLval = (Int, Int)
+type WLval = (Integer, Integer)
 
 toHeap :: [String] -> MaxPrioHeap WLprio WLval
 toHeap = foldl toHeap' empty
@@ -39,7 +39,7 @@ toHeap = foldl toHeap' empty
                                           p       = (read w, read l)
                                       in  insert (WLprio p, p) h
 
-complSum :: [(WLprio, WLval)] -> (Int, Int)
+complSum :: [(WLprio, WLval)] -> (Integer, Integer)
 complSum = foldl complSum' (0, 0)
     where complSum' (cmp, sum) (_, (w, l)) =
             let len = cmp + l
